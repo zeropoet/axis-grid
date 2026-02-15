@@ -1,9 +1,11 @@
 /tmp
 /out-tsc
 /dist
+/out
 /.next
 *.tsbuildinfo
 .DS_Store
+*.zip
 
 /node_modules
 npm-debug.log*
