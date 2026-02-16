@@ -157,6 +157,8 @@ export default function GridEngine() {
                 const { width, height } = viewport()
                 const centerX = width * 0.5
                 const centerY = height * 0.5
+                const hasTouch =
+                    ((p as unknown as { touches?: unknown[] }).touches?.length ?? 0) > 0
                 const pulling = pointerIsActive()
                 const focus = pointerPosition()
 
@@ -182,10 +184,10 @@ export default function GridEngine() {
                 const ax = new Float32Array(nodes.length)
                 const ay = new Float32Array(nodes.length)
 
-                const structuralK = 0.12
-                const springFriction = 0.07
-                const anchorK = 0.032
-                const damping = 0.17
+                const structuralK = 0.09
+                const springFriction = 0.095
+                const anchorK = 0.024
+                const damping = 0.205
                 const idleWave = 0.06
 
                 for (let i = 0; i < nodes.length; i += 1) {
@@ -254,7 +256,7 @@ export default function GridEngine() {
                     const dx = node.x - pointerX
                     const dy = node.y - pointerY
                     const d = Math.hypot(dx, dy) || 1
-                    const radius = Math.min(width, height) * (pulling ? 0.3 : 0.24)
+                    const radius = hasTouch ? 10 : Math.min(width, height) * (pulling ? 0.3 : 0.24)
                     if (d < radius) {
                         const influence = (1 - d / radius) ** 2
                         const dirX = -dx / d
